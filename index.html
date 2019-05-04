@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/index.css">
+    <title>Neraca Perdagangan Indonesia Tahun 2014-2018 | IF4061 Visualisasi Data</title>
+  </head>
+  <body>
+    <div id="content" class="pt-3 pb-3 d-flex align-items-center justify-content-center">
+        <div class="container">
+            <!-- First row (trivia) -->
+            <div class="row">
+                <div class="col-md-6 p-1">
+                    <div class="card">
+                        <div id="trivia1" class="card-body">
+                        <img id="neraca" class="img-fluid" src="img/neraca.png" alt="neraca">1
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 p-1">
+                    <div class="card">
+                        <div id="trivia2" class="card-body">2</div>
+                    </div>
+                </div>
+                <div class="col-md-3 p-1">
+                    <div class="card">
+                        <div id="trivia3" class="card-body">3</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Second row -->
+            <div class="row">
+
+                <!-- Left column -->
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-12 p-1">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5>Neraca Perdagangan Indonesia Tahun 2014-2018 </h5>
+                                    <div id="view1"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-12 p-1">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5>Rata-rata Ekspor Impor Tahun 2014-2018 </h5>
+                                    <div id="view2"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right column (bar chart) -->
+                <div class="col-md-6 p-1">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5>Rata-rata Ekspor Impor Sektor Perdagangan Tahun 2014-2018</h5>
+                            <div id="view3"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="js/jquery.csv.js"></script>
+    <script src="js/tes.js"></script>
+    <script src="js/pizza.js"></script>
+    <script>
+        // Load the Visualization API and the corechart package.
+        google.charts.load('current', {'packages':['corechart']});
+
+        // Set a callback to run when the Google Visualization API is loaded.
+        google.charts.setOnLoadCallback(drawChart);
+        google.charts.setOnLoadCallback(drawPizza);
+    </script>
+  </body>
+</html>

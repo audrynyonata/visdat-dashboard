@@ -1,0 +1,28 @@
+html, body {
+    height: 100%;
+}
+
+body {
+    background-color: #dddddd;
+}
+
+.card {
+    border-radius: 0;
+    border: none;
+} 
+
+#content {
+    min-height: 100%;
+}
+
+#view1,#view2 {
+    min-height: 250px;
+}
+
+#trivia1, #trivia2, #trivia3 {
+    min-height: 100px;
+}
+
+#neraca {
+    height: 60px;
+}
