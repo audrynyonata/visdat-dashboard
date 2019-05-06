@@ -21,8 +21,38 @@ body {
 
 #trivia1, #trivia2, #trivia3 {
     min-height: 100px;
+    padding: 10px;
+}
+
+#trivia1 {
+	background-color: #FC5554;
+	display: flex;
+}
+
+#trivia2 {
+	background-color: #67C2EF;
+	display: flex;
+}
+
+#trivia3 {
+	background-color: #7CC14D;
+	display: flex;
+}
+
+.vertical-line {
+  border-left: thick solid white;
+  padding: 10px;
+  margin-left: 10px;
+  color: white;
 }
 
 #neraca {
     height: 60px;
+}
+
+.img-center {
+	align-self: center;
+}
+.no-margin {
+	margin-bottom: 0;
 }
