@@ -12,7 +12,7 @@
   </head>
   <body>
     <div id="content" class="pt-3 pb-3 d-flex align-items-center justify-content-center">
-        <div class="container">
+        <div class="container-fluid">
             <!-- First row (trivia) -->
             <div class="row">
                 <div class="col-md-6 p-1">
@@ -91,9 +91,19 @@
                     <div class="card h-100">
                         <div class="card-body">
                             <h5>Rata-rata Ekspor Impor Sektor Perdagangan Tahun 2014-2018</h5>
-                            <div id="view3">
-                                
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="radio" name="sortBy" id="sortByDefault" checked>
+                              <label class="form-check-label" for="sortByDefault">Default</label>
                             </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="radio" name="sortBy" id="sortByEkspor">
+                              <label class="form-check-label" for="sortByEkspor">Ekspor</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="radio" name="sortBy" id="sortByImpor">
+                              <label class="form-check-label" for="sortByImpor">Impor</label>
+                            </div>
+                            <div id="view3"></div>
                         </div>
                     </div>
                 </div>
@@ -109,13 +119,34 @@
     <script src="js/jquery.csv.js"></script>
     <script src="js/tes.js"></script>
     <script src="js/pizza.js"></script>
+    <script src="js/barChart.js"></script>
     <script>
         // Load the Visualization API and the corechart package.
         google.charts.load('current', {'packages':['corechart']});
 
         // Set a callback to run when the Google Visualization API is loaded.
-        google.charts.setOnLoadCallback(drawChart);
+//        google.charts.setOnLoadCallback(drawChart);
         google.charts.setOnLoadCallback(drawPizza);
+        google.charts.setOnLoadCallback(function() {drawBarChart(2014)});
+
+        window.onload = function() {
+
+        var ex1 = document.getElementById('sortByDefault');
+        var ex2 = document.getElementById('sortByImpor');
+        var ex3 = document.getElementById('sortByEkspor');
+
+        ex1.onclick = function(){
+            alert('sortByDefault');
+        }
+        ;
+        ex2.onclick = handler;
+        ex3.onclick = handler;
+
+    }
+
+    function handler() {
+        alert('clicked');
+    }
     </script>
     <script type="text/javascript">
         google.charts.load("current", {packages:["corechart"]});
