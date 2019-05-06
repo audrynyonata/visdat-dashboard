@@ -44,7 +44,15 @@
                             <div class="card">
                                 <div class="card-body">
                                     <h5>Neraca Perdagangan Indonesia Tahun 2014-2018 </h5>
-                                    <div id="view1"></div>
+                                    <div id="view1">
+                                        <!-- Dummy button -->
+                                        <button onclick="drawChart(0)">All</button>
+                                        <button onclick="drawChart(1)">2014</button>
+                                        <button onclick="drawChart(2)">2015</button>
+                                        <button onclick="drawChart(3)">2016</button>
+                                        <button onclick="drawChart(4)">2017</button>
+                                        <button onclick="drawChart(5)">2018</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -54,7 +62,7 @@
                         <div class="col-md-12 p-1">
                             <div class="card">
                                 <div class="card-body">
-                                    <h5>Rata-rata Ekspor Impor Tahun 2014-2018 </h5>
+                                    <h5 id="title-view2">Rata-rata Ekspor Impor Tahun 2014-2018 </h5>
                                     <div id="view2"></div>
                                 </div>
                             </div>
@@ -67,7 +75,9 @@
                     <div class="card h-100">
                         <div class="card-body">
                             <h5>Rata-rata Ekspor Impor Sektor Perdagangan Tahun 2014-2018</h5>
-                            <div id="view3"></div>
+                            <div id="view3">
+                                
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -90,6 +100,84 @@
         // Set a callback to run when the Google Visualization API is loaded.
         google.charts.setOnLoadCallback(drawChart);
         google.charts.setOnLoadCallback(drawPizza);
+    </script>
+    <script type="text/javascript">
+        google.charts.load("current", {packages:["corechart"]});
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart(number) {
+            let title = "Rata-rata Ekspor Impor Tahun 2014-2018";
+            if (number == 0) {
+                // Rata-rata tahun 2014-2018
+                var data = google.visualization.arrayToDataTable([
+                    ['Kategori', 'Jumlah (dalam juta US$)'],
+                    ['Ekspor - 164,115.14',     164115.14],
+                    ['Impor - 160,444.66',      160444.66]
+                ]);
+                title = "Rata-rata Ekspor Impor Tahun 2014-2018";
+            } else if (number == 1) {
+                // Tahun 2014
+                var data = google.visualization.arrayToDataTable([
+                    ['Kategori', 'Jumlah (dalam juta US$)'],
+                    ['Ekspor - 175,980.00',     175980.00],
+                    ['Impor - 178,178.80',      178178.80]
+                ]);
+                title = "Ekspor Impor Tahun 2014";
+            } else if (number == 2) {
+                // Tahun 2015
+                var data = google.visualization.arrayToDataTable([
+                    ['Kategori', 'Jumlah (dalam juta US$)'],
+                    ['Ekspor - 150,366.30',     150366.30],
+                    ['Impor - 142,694.80',      142694.80]
+                ]);
+                title = "Ekspor Impor Tahun 2015";
+            } else if (number == 3) {
+                // Tahun 2016
+                var data = google.visualization.arrayToDataTable([
+                    ['Kategori', 'Jumlah (dalam juta US$)'],
+                    ['Ekspor - 145,186.20',     145186.20],
+                    ['Impor - 135,652.90',      135652.90]
+                ]);
+                title = "Ekspor Impor Tahun 2016";
+            } else if (number == 4) {
+                // Tahun 2017
+                var data = google.visualization.arrayToDataTable([
+                    ['Kategori', 'Jumlah (dalam juta US$)'],
+                    ['Ekspor - 168,828.20',     168828.20],
+                    ['Impor - 156,985.60',      156985.60]
+                ]);
+                title = "Ekspor Impor Tahun 2017";
+            } else if (number == 5) {
+                // Tahun 2018
+                var data = google.visualization.arrayToDataTable([
+                    ['Kategori', 'Jumlah (dalam juta US$)'],
+                    ['Ekspor - 180,215.00',     180215.00],
+                    ['Impor - 188,711.20',      188711.20]
+                ]);
+                title = "Ekspor Impor Tahun 2018";
+            } else {
+                // Default (2014-2018)
+                var data = google.visualization.arrayToDataTable([
+                    ['Kategori', 'Jumlah (dalam juta US$)'],
+                    ['Ekspor - 164,115.14',     164115.14],
+                    ['Impor - 160,444.66',      160444.66]
+                ]);
+                title = "Rata-rata Ekspor Impor Tahun 2014-2018";
+            }
+            
+            var options = {
+                pieHole: 0.6,
+                pieSliceText: 'none',
+                colors: ['#03C03C', '#FF1C00'],
+                tooltip: { text: 'percentage' },
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('view2'));
+            if (number == 1) {
+
+            }
+            document.getElementById("title-view2").innerHTML = title;
+            chart.draw(data, options);
+        }
     </script>
   </body>
 </html>
