@@ -8,26 +8,29 @@ function drawBarChart(year) {
       var arrayImpor = $.csv.toArrays(csvStringImpor, {onParseValue: $.csv.hooks.castToScalar});
       
       // transform year header from number to text      
-      for(var i=1;i<=6;i++){
+      for(var i=1;i<=7;i++){
         arrayEkspor[0][i] = arrayEkspor[0][i].toString()
         arrayImpor[0][i] = arrayImpor[0][i].toString()
       }
 
       // replace all ekspor with negative value (biar di kiri sumbu Y)
       for(var j=1; j<arrayEkspor.length;j++){
-        for(var i=1;i<=6;i++){
+        for(var i=1;i<=7;i++){
           arrayEkspor[j][i] = arrayEkspor[j][i] * -1
         }
       }
 
-      var yr = 1;
-      switch (year) {
-        case 2014: yr = 2; break;
-        case 2015: yr = 3; break;
-        case 2016: yr = 4; break;
-        case 2017: yr = 5; break;
-        case 2018: yr = 6; break;
-        default: yr = 1; break;
+      var yr;
+      if(year === undefined){
+        yr = 7; //average
+      } else {
+        switch (year) {
+          case 2014: yr = 2; break;
+          case 2015: yr = 3; break;
+          case 2016: yr = 4; break;
+          case 2017: yr = 5; break;
+          case 2018: yr = 6; break;
+        }
       }
 
       var arrayFinal = [];
@@ -50,17 +53,22 @@ function drawBarChart(year) {
       var options = {
         isStacked: true,
         hAxis: {
+          minValue: data.getColumnRange(1).min,
+          maxValue: data.getColumnRange(2).max,
+          title: 'Juta US$',
           format: ',###.#;,###.#'
         },
         height: 500,
         animation: {
-          duration: 2000,
+          startup: true,
+          duration: 1000,
           easing: 'out'
         },
         tooltip: {
           isHtml: true,
           trigger: 'both'
         },
+        legend: 'none',
         colors: ['#8BC34A', '#F44336']
       };
 

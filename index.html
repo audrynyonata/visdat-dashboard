@@ -62,12 +62,12 @@
                                     <h5>Neraca Perdagangan Indonesia Tahun 2014-2018 </h5>
                                     <div id="view1">
                                         <!-- Dummy button -->
-                                        <button onclick="drawChart(0)">All</button>
-                                        <button onclick="drawChart(1)">2014</button>
-                                        <button onclick="drawChart(2)">2015</button>
-                                        <button onclick="drawChart(3)">2016</button>
-                                        <button onclick="drawChart(4)">2017</button>
-                                        <button onclick="drawChart(5)">2018</button>
+                                        <button onclick="drawChart(0),drawBarChart({year: 'all'})">All</button>
+                                        <button onclick="drawChart(1),drawBarChart({year: 2014})">2014</button>
+                                        <button onclick="drawChart(2),drawBarChart({year: 2015})">2015</button>
+                                        <button onclick="drawChart(3),drawBarChart({year: 2016})">2016</button>
+                                        <button onclick="drawChart(4),drawBarChart({year: 2017})">2017</button>
+                                        <button onclick="drawChart(5),drawBarChart({year: 2018})">2018</button>
 										<div id="view-neraca">
 										</div>
                                     </div>
@@ -92,17 +92,17 @@
                 <div class="col-md-6 p-1">
                     <div class="card h-100">
                         <div class="card-body">
-                            <h5>Rata-rata Ekspor Impor Sektor Perdagangan Tahun 2014-2018</h5>
+                            <h5 id="title-view3">Rata-rata Ekspor Impor Sektor Perdagangan Tahun 2014-2018</h5>
                             <div class="form-check form-check-inline">
-                              <input class="form-check-input" type="radio" name="sortBy" id="sortByDefault" checked>
+                              <input class="form-check-input" type="radio" name="sortBy" id="sortByDefault" checked onclick="drawBarChart({sortBy: 'default'})">
                               <label class="form-check-label" for="sortByDefault">Default</label>
                             </div>
                             <div class="form-check form-check-inline">
-                              <input class="form-check-input" type="radio" name="sortBy" id="sortByEkspor">
+                              <input class="form-check-input" type="radio" name="sortBy" id="sortByEkspor" onclick="drawBarChart({sortBy: 'ekspor'})">
                               <label class="form-check-label" for="sortByEkspor">Ekspor</label>
                             </div>
                             <div class="form-check form-check-inline">
-                              <input class="form-check-input" type="radio" name="sortBy" id="sortByImpor">
+                              <input class="form-check-input" type="radio" name="sortBy" id="sortByImpor" onclick="drawBarChart({sortBy: 'impor'})">
                               <label class="form-check-label" for="sortByImpor">Impor</label>
                             </div>
                             <div id="view3"></div>
@@ -119,36 +119,117 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="js/jquery.csv.js"></script>
-    <script src="js/tes.js"></script>
-    <script src="js/pizza.js"></script>
-    <script src="js/barChart.js"></script>
     <script>
         // Load the Visualization API and the corechart package.
         google.charts.load('current', {'packages':['corechart']});
 
         // Set a callback to run when the Google Visualization API is loaded.
-//        google.charts.setOnLoadCallback(drawChart);
-        google.charts.setOnLoadCallback(drawPizza);
-        google.charts.setOnLoadCallback(function() {drawBarChart(2014)});
+        google.charts.setOnLoadCallback(initBarChart);
 
-        window.onload = function() {
+        var barChart;
+        var barChartTitle = document.getElementById("title-view3");
+        var year = 'all';
+        var sortBy = 'default';
 
-        var ex1 = document.getElementById('sortByDefault');
-        var ex2 = document.getElementById('sortByImpor');
-        var ex3 = document.getElementById('sortByEkspor');
+        var arrayEkspor = [];
+        var arrayImpor = [];
+        var arrayFinal = [];
+        arrayFinal[0] = ['Sektor', 'Ekspor', 'Impor']
 
-        ex1.onclick = function(){
-            alert('sortByDefault');
-        }
-        ;
-        ex2.onclick = handler;
-        ex3.onclick = handler;
+        function initBarChart() {
+            // Source: http://blog.deontwikkelfabriek.nl/creating-a-population-pyramid-with-the-google-chart-tools/ 
+            // grab the CSV
+            $.get("data/ekspor.csv", function(csvStringEkspor) {
+              $.get("data/impor.csv", function(csvStringImpor) {
+                // transform the CSV string into a 2-dimensional array
+                arrayEkspor = $.csv.toArrays(csvStringEkspor, {onParseValue: $.csv.hooks.castToScalar});
+                arrayImpor = $.csv.toArrays(csvStringImpor, {onParseValue: $.csv.hooks.castToScalar});
+                  
+                // transform year header from number to text      
+                for(var i=1;i<=7;i++){
+                    arrayEkspor[0][i] = arrayEkspor[0][i].toString()
+                    arrayImpor[0][i] = arrayImpor[0][i].toString()
+                }
 
-    }
+                // replace all ekspor with negative value (biar di kiri sumbu Y)
+                for(var j=1; j<arrayEkspor.length;j++){
+                    for(var i=1;i<=7;i++){
+                        arrayEkspor[j][i] = arrayEkspor[j][i] * -1
+                    }
+                }
 
-    function handler() {
-        alert('clicked');
-    }
+                barChart = new google.visualization.BarChart(document.getElementById('view3'))
+
+                drawBarChart({year:'all',sortBy:'default'});
+              })
+            })
+        };
+
+        function drawBarChart(param){
+            if(param.year ===  undefined){
+                //don't change year
+            } else {
+                switch (param.year) {
+                    case 2013: year = 1; barChartTitle.innerText = 'Ekspor Impor Sektor Perdagangan Tahun 2013'; break;
+                    case 2014: year = 2; barChartTitle.innerText = 'Ekspor Impor Sektor Perdagangan Tahun 2014'; break;
+                    case 2015: year = 3; barChartTitle.innerText = 'Ekspor Impor Sektor Perdagangan Tahun 2015';break;
+                    case 2016: year = 4; barChartTitle.innerText = 'Ekspor Impor Sektor Perdagangan Tahun 2016';break;
+                    case 2017: year = 5; barChartTitle.innerText = 'Ekspor Impor Sektor Perdagangan Tahun 2017';break;
+                    case 2018: year = 6; barChartTitle.innerText = 'Ekspor Impor Sektor Perdagangan Tahun 2018';break;
+                    case 'all': year = 7; barChartTitle.innerText = 'Rata-rata Ekspor Impor Sektor Perdagangan Tahun 2014-2018';break; //average
+                }
+                for (var i=1;i<arrayEkspor.length;i++) {
+                    arrayFinal[i] = []
+                    arrayFinal[i].push(arrayEkspor[i][0],arrayEkspor[i][year],arrayImpor[i][year])
+                }
+            }
+
+            // this new DataTable object holds all the data
+            var data = new google.visualization.arrayToDataTable(arrayFinal);
+
+            if(param.sortBy === undefined){
+                //don't change sortBy
+            } else {
+                switch (param.sortBy){
+                    case 'default': sortBy = 0; break;
+                    case 'ekspor': sortBy = 1; break;
+                    case 'impor': sortBy = 2; break;
+                }
+                data.sort([{column: sortBy}]);
+            }
+
+            var options = {
+                isStacked: true,
+                hAxis: {
+                    minValue: -50000,
+                    maxValue: 50000,
+                    title: 'Juta US$',
+                    format: ',###.#;,###.#'
+                },
+                height: 500,
+                animation: {
+                    duration: 1000,
+                    easing: 'out'
+                },
+                tooltip: {
+                    isHtml: true,
+                    trigger: 'both'
+                },
+                legend: 'none',
+                colors: ['#8BC34A', '#F44336']
+            };
+
+            var formatter = new google.visualization.NumberFormat({
+                pattern: '.#;,.#',
+                suffix: ' Juta US$'
+            });
+            
+            formatter.format(data, 1)
+            formatter.format(data, 2)
+            
+            // create the chart object and draw it
+            barChart.draw(data, options)
+        };
     </script>
     <script type="text/javascript">
         google.charts.load("current", {packages:["corechart"]});
