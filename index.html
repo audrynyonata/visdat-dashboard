@@ -68,6 +68,8 @@
                                         <button onclick="drawChart(3)">2016</button>
                                         <button onclick="drawChart(4)">2017</button>
                                         <button onclick="drawChart(5)">2018</button>
+										<div id="view-neraca">
+										</div>
                                     </div>
                                 </div>
                             </div>
@@ -223,6 +225,37 @@
 
             }
             document.getElementById("title-view2").innerHTML = title;
+            chart.draw(data, options);
+        }
+    </script>
+	<script type="text/javascript">
+        google.charts.load("current", {packages:["corechart"]});
+        google.charts.setOnLoadCallback(drawBalance);
+        function drawBalance() {
+            var data = google.visualization.arrayToDataTable([
+				[ {label: 'Tahun', id: 'tahun'},
+					{label: 'Neraca', id: 'neraca', type: 'number'},
+				{label: 'Style', type: 'string', role: 'style'}
+				],
+			  [ '2014', -2198.8, 'point {size: 3; fill-color: #000000;}'],
+			  [ '2015', 7671.5, 'point {size: 3; fill-color: #000000;}'],
+			  [ '2016', 9533.3, 'point {size: 3; fill-color: #000000;}'],
+			  [ '2017', 11842.6, 'point {size: 3; fill-color: #000000;}'],
+			  [ '2018', -8496.2, 'point {size: 3; fill-color: #000000;}']
+			]);
+
+			var options = {
+			  hAxis: {type: 'string'},
+			  vAxis: {
+				gridlines: {
+						color: 'transparent'},
+				format:'###.###',
+				minValue: -15000, 
+				maxValue: 15000},
+			  legend: 'none'
+			};
+
+            var chart = new google.visualization.ScatterChart(document.getElementById('view-neraca'));
             chart.draw(data, options);
         }
     </script>
