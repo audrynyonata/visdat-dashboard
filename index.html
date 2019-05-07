@@ -244,18 +244,19 @@
 			  [ '2018', -8496.2, 'point {size: 3; fill-color: #000000;}']
 			]);
 
-			var options = {
-			  hAxis: {type: 'string'},
-			  vAxis: {
-				gridlines: {
+			var options = {				
+				hAxis: {type: 'string'},
+				vAxis: {
+					gridlines: {
+						count: 7,
 						color: 'transparent'},
-				format:'###.###',
-				minValue: -15000, 
-				maxValue: 15000},
-			  legend: 'none'
+					format:'###.###',
+					minValue: -15000, 
+					maxValue: 15000},
+				legend: 'none'
 			};
 
-            var chart = new google.visualization.ScatterChart(document.getElementById('view-neraca'));
+            var chart = new google.visualization.LineChart(document.getElementById('view-neraca'));
             chart.draw(data, options);
         }
     </script>
