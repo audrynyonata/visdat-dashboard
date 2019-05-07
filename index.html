@@ -307,13 +307,8 @@
             }
             document.getElementById("title-view2").innerHTML = title;
             chart.draw(data, options);
-        }
-    </script>
-	<script type="text/javascript">
-        google.charts.load("current", {packages:["corechart"]});
-        google.charts.setOnLoadCallback(drawBalance);
-        function drawBalance() {
-            var data = google.visualization.arrayToDataTable([
+			
+			var data = google.visualization.arrayToDataTable([
 				[ {label: 'Tahun', id: 'tahun'},
 					{label: 'Neraca', id: 'neraca', type: 'number'},
 				{label: 'Style', type: 'string', role: 'style'}
@@ -339,7 +334,19 @@
 
             var chart = new google.visualization.LineChart(document.getElementById('view-neraca'));
             chart.draw(data, options);
+			
+			if (number == 1) {
+				chart.setSelection([{row: 0, column: 1}]);
+			} else if (number == 2) {
+				chart.setSelection([{row: 1, column: 1}]);
+			} else if (number == 3) {
+				chart.setSelection([{row: 2, column: 1}]);
+			} else if (number == 4) {
+				chart.setSelection([{row: 3, column: 1}]);
+			} else if (number == 5) {
+				chart.setSelection([{row: 4, column: 1}]);
+			}
         }
-    </script>
+    </script>	
   </body>
 </html>
